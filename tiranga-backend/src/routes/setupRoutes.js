@@ -4,7 +4,7 @@ const Admin = require('../models/Admin');
 
 // One-time setup route to create super admin
 // Visit this URL once after deployment, then remove or disable this route
-router.post('/create-admin', async (req, res) => {
+const createAdminHandler = async (req, res) => {
   try {
     // Check if admin already exists
     const existingAdmin = await Admin.findOne({ email: 'admin@tirangagreenenergy.com' });
@@ -41,6 +41,10 @@ router.post('/create-admin', async (req, res) => {
       error: error.message
     });
   }
-});
+};
+
+// Support both GET and POST for convenience
+router.get('/create-admin', createAdminHandler);
+router.post('/create-admin', createAdminHandler);
 
 module.exports = router;
