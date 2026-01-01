@@ -43,6 +43,31 @@ const createAdminHandler = async (req, res) => {
   }
 };
 
+// Test database connection
+router.get('/test-db', async (req, res) => {
+  try {
+    const mongoose = require('mongoose');
+    const status = mongoose.connection.readyState;
+    const statusMap = {
+      0: 'disconnected',
+      1: 'connected',
+      2: 'connecting',
+      3: 'disconnecting'
+    };
+
+    res.json({
+      success: true,
+      database: statusMap[status],
+      connection: mongoose.connection.host || 'no host'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // Support both GET and POST for convenience
 router.get('/create-admin', createAdminHandler);
 router.post('/create-admin', createAdminHandler);
