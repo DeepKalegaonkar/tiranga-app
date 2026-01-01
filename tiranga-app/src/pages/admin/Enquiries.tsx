@@ -34,10 +34,8 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import CheckIcon from '@mui/icons-material/Check';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
@@ -45,7 +43,7 @@ import api from '../../services/api';
 const AdminEnquiries: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { admin, token, logout, isAuthenticated } = useAuth();
+  const { token, logout, isAuthenticated } = useAuth();
 
   const [enquiries, setEnquiries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
