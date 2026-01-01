@@ -61,6 +61,7 @@ app.use('/uploads', express.static('public/uploads'));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 app.use('/api/testimonials', require('./routes/testimonialRoutes'));
+app.use('/api/setup', require('./routes/setupRoutes')); // One-time setup route
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -98,15 +99,21 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () => {
-  console.log(`
+// For local development
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL_ENV) {
+  const server = app.listen(PORT, () => {
+    console.log(`
     ==========================================
     🚀 Server running in ${process.env.NODE_ENV} mode
     📡 Port: ${PORT}
     🌐 URL: http://localhost:${PORT}
     ==========================================
-  `);
-});
+    `);
+  });
+}
+
+// Export app for Vercel serverless
+module.exports = app;
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
